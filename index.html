@@ -104,7 +104,23 @@ canvas { display:block; width:100%; height:100%; }
  pointer-events:none; z-index:4; text-shadow:0 0 8px #000,0 0 2px #000;
 }
 
-#signal small { display:block; margin-top:10px; font-size:12px; color:#ffd0c8; letter-spacing:1px; }
+#signal small { display:block; margin-top:14px; font-size:12px; color:#ffd0c8; letter-spacing:1px; font-weight:normal; }
+.sg { padding:22px 26px; border:1px solid #ff6b5e66; background:#000000a8; border-radius:4px; max-width:86vw; box-shadow:0 0 40px #000; }
+.sg-tag { font-size:11px; letter-spacing:3px; color:#ff9a90; text-align:left; margin-bottom:14px; }
+.sg-tag span { display:inline-block; width:9px; height:9px; border-radius:50%; background:#ff3b30; margin-right:8px; animation:sgblink 1s steps(2) infinite; }
+.sg-t { font-size:clamp(20px,6vw,34px); color:#fff; letter-spacing:4px; animation:sgglitch 1.6s infinite; }
+.sg-s { margin-top:8px; font-size:13px; letter-spacing:6px; color:#ff6b5e; animation:sgblink 1.2s steps(2) infinite; }
+.sg-bars { display:flex; gap:5px; justify-content:center; align-items:flex-end; height:28px; margin-top:16px; }
+.sg-bars i { display:block; width:9px; background:#ff6b5e; opacity:.25; }
+.sg-bars i:nth-child(1) { height:6px; animation:sgbar 1.1s steps(2) infinite; } .sg-bars i:nth-child(2) { height:11px; } .sg-bars i:nth-child(3) { height:16px; } .sg-bars i:nth-child(4) { height:22px; } .sg-bars i:nth-child(5) { height:28px; }
+@keyframes sgblink { 50% { opacity:.15; } }
+@keyframes sgbar { 50% { opacity:1; } }
+@keyframes sgglitch {
+ 0%,86%,100% { text-shadow:2px 0 #ff2a2a, -2px 0 #2ae8ff; transform:none; }
+ 88% { text-shadow:7px 0 #ff2a2a, -7px 0 #2ae8ff; transform:translateX(-4px) skewX(6deg); }
+ 92% { text-shadow:-6px 0 #ff2a2a, 6px 0 #2ae8ff; transform:translateX(5px); }
+ 96% { text-shadow:3px 0 #ff2a2a, -3px 0 #2ae8ff; transform:translateY(2px); }
+}
 .mini { pointer-events:auto; border:1px solid #c8e7ff99; background:#071b2dcc; color:#fff; border-radius:8px; padding:2px 8px; font-size:13px; margin-left:2px; }
 
 @media (orientation: portrait) {
@@ -182,10 +198,40 @@ canvas { display:block; width:100%; height:100%; }
 #info { top:64px; left:8px; gap:4px; max-width:calc(100vw - 196px); }
 #objective, #message { font-size:11px; padding:4px 8px; }
 #lock { right:8px; top:84px; width:172px; font-size:11px; }
+#splash { position:fixed; inset:0; z-index:100; display:flex; align-items:center; justify-content:center; background:radial-gradient(ellipse at 50% 42%, #14384f 0%, #08131c 55%, #03070b 100%); transition:opacity .8s ease; overflow:hidden; }
+#splash.hide { opacity:0; pointer-events:none; }
+#splash:before { content:""; position:absolute; inset:0; background:repeating-linear-gradient(0deg, rgba(255,255,255,.035) 0 1px, transparent 1px 3px); animation:spscan 6s linear infinite; }
+#splash:after { content:""; position:absolute; left:-20%; right:-20%; top:50%; height:240px; margin-top:-120px; background:radial-gradient(ellipse at center, rgba(90,190,255,.16), transparent 70%); animation:sppulse 3.4s ease-in-out infinite; }
+.sp-in { position:relative; z-index:1; text-align:center; padding:0 16px; }
+.sp-top { font:600 clamp(11px,3vw,15px)/1 system-ui,sans-serif; letter-spacing:.55em; padding-left:.55em; color:#7fb7d6; opacity:0; animation:spup 1s .2s forwards; }
+.sp-name { margin-top:18px; font:800 clamp(40px,14vw,86px)/1.05 system-ui,'Segoe UI',Roboto,sans-serif; letter-spacing:.04em; background:linear-gradient(100deg,#6fd3ff 0%,#ffffff 30%,#ffb15e 60%,#6fd3ff 100%); background-size:250% 100%; -webkit-background-clip:text; background-clip:text; color:transparent; -webkit-text-fill-color:transparent; filter:drop-shadow(0 0 16px rgba(80,190,255,.5)); opacity:0; animation:spup 1.1s .55s forwards, spshine 3.2s 1.2s linear infinite; }
+.sp-line { width:0; height:2px; margin:20px auto 0; background:linear-gradient(90deg, transparent, #6fd3ff, #ffb15e, transparent); animation:splen 1.2s 1.1s forwards; }
+.sp-sub { margin-top:18px; font:600 clamp(12px,3.4vw,16px)/1 system-ui,sans-serif; letter-spacing:.42em; padding-left:.42em; color:#bcd6e6; opacity:0; animation:spup 1s 1.5s forwards; }
+.sp-bar { width:min(60vw,260px); height:3px; margin:28px auto 0; background:#ffffff1c; border-radius:3px; overflow:hidden; }
+.sp-bar i { display:block; height:100%; width:40%; background:linear-gradient(90deg,#6fd3ff,#ffb15e); border-radius:3px; animation:spbar 1.4s ease-in-out infinite; }
+.sp-st { margin-top:12px; font:12px system-ui,sans-serif; color:#7fa0b5; min-height:16px; }
+@keyframes spup { from { opacity:0; transform:translateY(14px); } to { opacity:1; transform:none; } }
+@keyframes spshine { to { background-position:-250% 0; } }
+@keyframes splen { to { width:min(62vw,300px); } }
+@keyframes spbar { 0% { transform:translateX(-110%); } 100% { transform:translateX(260%); } }
+@keyframes spscan { to { background-position:0 60px; } }
+@keyframes sppulse { 0%,100% { opacity:.5; } 50% { opacity:1; } }
+#vig { position:fixed; inset:0; pointer-events:none; z-index:2; background:radial-gradient(ellipse at center, transparent 58%, rgba(0,0,0,.42) 100%); }
+#fpsb { display:none; position:fixed; top:2px; left:50%; transform:translateX(-50%); font:11px monospace; color:#9fe3a5; background:#0008; padding:1px 6px; border-radius:6px; z-index:6; pointer-events:none; }
+.mbtn.small.on { background:#69c8e8; color:#06202c; font-weight:bold; }
+.setrow { margin:8px 0 2px; font-size:13px; color:#c6d8e5; text-align:left; }
 </style>
 </head>
 
 <body>
+<div id="splash"><div class="sp-in">
+ <div class="sp-top">РАЗРАБОТАНО</div>
+ <div class="sp-name">Erasyl work</div>
+ <div class="sp-line"></div>
+ <div class="sp-sub">FPV FRONT</div>
+ <div class="sp-bar"><i></i></div>
+ <div class="sp-st" id="spst">Загрузка…</div>
+</div></div>
 
 <div id="hud">
  <div id="top" class="panel">
@@ -229,10 +275,18 @@ canvas { display:block; width:100%; height:100%; }
 
 <div id="mapov"><canvas id="mapc"></canvas></div>
 
+<div id="vig"></div>
+<div id="fpsb"></div>
 <div id="dmg"></div>
 <div id="flash"></div>
 <canvas id="noise"></canvas>
-<div id="signal"><div>СИГНАЛ ПОТЕРЯН<small>дрон уничтожен · перезапуск…</small></div></div>
+<div id="signal"><div class="sg">
+ <div class="sg-tag"><span></span>REC · FPV LINK</div>
+ <div class="sg-t">ВИДЕОСИГНАЛ ПОТЕРЯН</div>
+ <div class="sg-s">NO VIDEO LINK</div>
+ <div class="sg-bars"><i></i><i></i><i></i><i></i><i></i></div>
+ <small id="sgr">дрон уничтожен · восстановление связи…</small>
+</div></div>
 
 
 
@@ -242,6 +296,19 @@ function __main(){
 
 
 const $ = id => document.getElementById(id);
+
+// ───────────── НАСТРОЙКИ ─────────────
+const CFGKEY = 'fpv_cfg_v1';
+const cfg = { q: 'auto', dist: 1, fx: 2, vol: .7, shadow: 0, fps: 0, vig: 1, sens: 1 };
+try{ Object.assign(cfg, JSON.parse(localStorage.getItem(CFGKEY) || '{}')); }catch(e){}
+const DISTS = [{ fog: .0027, cull: 650, sold: 250 }, { fog: .0021, cull: 900, sold: 330 }, { fog: .0017, cull: 1100, sold: 430 }];
+const FXM = [.35, .7, 1];
+let autoPR = Math.min(devicePixelRatio || 1, 1);
+function curPR(){
+ const m = devicePixelRatio || 1;
+ return cfg.q === 'low' ? Math.min(m, .7) : cfg.q === 'med' ? Math.min(m, 1) : cfg.q === 'high' ? Math.min(m, 1.75) : Math.min(m, autoPR);
+}
+function saveCfg(){ try{ localStorage.setItem(CFGKEY, JSON.stringify(cfg)); }catch(e){} }
 
 // детерминированный генератор — мир каждый раз одинаковый
 function mulberry32(a){
@@ -260,17 +327,19 @@ const FOG = 0x9db5c2;
 
 const scene = new THREE.Scene();
 scene.background = new THREE.Color(FOG);
-scene.fog = new THREE.FogExp2(FOG, 0.0017);
+scene.fog = new THREE.FogExp2(FOG, DISTS[cfg.dist].fog);
 
-const camera = new THREE.PerspectiveCamera(78, innerWidth / innerHeight, 0.1, 1700);
+const camera = new THREE.PerspectiveCamera(78, innerWidth / innerHeight, 0.1, 2200);
 scene.add(camera);
 
 const renderer = new THREE.WebGLRenderer({
  antialias: devicePixelRatio < 2,
  powerPreference: 'high-performance'
 });
-renderer.setPixelRatio(Math.min(devicePixelRatio, 1.5));
+renderer.setPixelRatio(curPR());
 renderer.setSize(innerWidth, innerHeight);
+if(cfg.shadow){ renderer.shadowMap.enabled = true; renderer.shadowMap.type = THREE.PCFSoftShadowMap; }
+function applyPR(){ renderer.setPixelRatio(curPR()); renderer.setSize(innerWidth, innerHeight); }
 renderer.outputColorSpace = THREE.SRGBColorSpace;
 renderer.toneMapping = THREE.ACESFilmicToneMapping;
 renderer.toneMappingExposure = 1.12;
@@ -284,6 +353,14 @@ const sunDir = new THREE.Vector3(-100, 180, 70).normalize();
 const sun = new THREE.DirectionalLight(0xffe6c2, 2.2);
 sun.position.copy(sunDir).multiplyScalar(300);
 scene.add(sun);
+scene.add(sun.target);
+if(cfg.shadow){
+ sun.castShadow = true;
+ sun.shadow.mapSize.set(2048, 2048);
+ const sc = sun.shadow.camera;
+ sc.left = -170; sc.right = 170; sc.top = 170; sc.bottom = -170; sc.near = 10; sc.far = 750;
+ sun.shadow.bias = -.0004; sun.shadow.normalBias = .4;
+}
 
 // ───────────── ПРОЦЕДУРНЫЕ ТЕКСТУРЫ ─────────────
 
@@ -321,7 +398,7 @@ const groundTex = (() => {
  x.fillStyle = '#55613f'; x.fillRect(0, 0, 512, 512);
  speck(x, 512, 512, 160, ['#4d5a38', '#66703f', '#5b4f3a', '#6e6a4c'], 18, 60, .10);
  speck(x, 512, 512, 12000, ['#46532f', '#62703f', '#7a7a52', '#4a4132', '#5c6b3a'], 1, 3.5, .5);
- return toTex(c, 320, 320);
+ return toTex(c, 1110, 1110);
 })();
 
 // асфальт
@@ -481,15 +558,206 @@ const boxes = [];   // здания
 const cyls = [];    // деревья, столбы
 const hills = [];   // холмы-конусы
 
+// ───────────── РАЗМЕРЫ МИРА ─────────────
+const WORLD = { X: 1500, ZN: -2500, ZS: 120 };
+
+// ───────────── РАЗРУШАЕМЫЕ ПОСТРОЙКИ ─────────────
+const destr = [];
+const staticObjs = [];
+const glassM = new THREE.MeshStandardMaterial({ color: 0x24394a, roughness: .2, metalness: .35, emissive: 0x0b1620 });
+const frameM = mat(0xdad6c8, .8);
+
+function regBox(b, obj, hp){
+ b.obj = obj; b.hp = hp; b.max = hp; b.dead = false; b.cT = 0; b.y1_0 = b.y1; b.sT = Math.random(); b.rub = [];
+ boxes.push(b);
+ destr.push(b);
+}
+
+function boxAt(p){
+ for(const b of boxes){
+  if(p.x > b.x0 && p.x < b.x1 && p.y > b.y0 && p.y < b.y1 && p.z > b.z0 && p.z < b.z1) return b;
+ }
+ return null;
+}
+
+function mergeBoxes(list){
+ const P = [], N = [], U = [], I = [];
+ let off = 0;
+ for(const o of list){
+  const geo = new THREE.BoxGeometry(o.w, o.h, o.d);
+  geo.translate(o.x, o.y, o.z);
+  const p = geo.attributes.position.array, n = geo.attributes.normal.array, u = geo.attributes.uv.array, ix = geo.index.array;
+  for(let i = 0; i < p.length; i++){ P.push(p[i]); N.push(n[i]); }
+  for(let i = 0; i < u.length; i++) U.push(u[i]);
+  for(let i = 0; i < ix.length; i++) I.push(ix[i] + off);
+  off += p.length / 3;
+  geo.dispose();
+ }
+ const g = new THREE.BufferGeometry();
+ g.setAttribute('position', new THREE.Float32BufferAttribute(P, 3));
+ g.setAttribute('normal', new THREE.Float32BufferAttribute(N, 3));
+ g.setAttribute('uv', new THREE.Float32BufferAttribute(U, 2));
+ g.setIndex(I);
+ return g;
+}
+
+function addWindows(g, w, h, d, y, nx, nz){
+ const fr = [], gl = [];
+ for(const sz of [1, -1]){
+  for(let i = 0; i < nx; i++){
+   const x = -w / 2 + (i + .5) * w / nx;
+   fr.push({ w: 1.0, h: 1.0, d: .08, x, y, z: sz * (d / 2 + .02) });
+   gl.push({ w: .78, h: .8, d: .1, x, y, z: sz * (d / 2 + .05) });
+  }
+ }
+ for(const sx of [1, -1]){
+  for(let i = 0; i < nz; i++){
+   const z = -d / 2 + (i + .5) * d / nz;
+   fr.push({ w: .08, h: 1.0, d: 1.0, x: sx * (w / 2 + .02), y, z });
+   gl.push({ w: .1, h: .8, d: .78, x: sx * (w / 2 + .05), y, z });
+  }
+ }
+ g.add(new THREE.Mesh(mergeBoxes(fr), frameM));
+ g.add(new THREE.Mesh(mergeBoxes(gl), glassM));
+}
+
+function damageStruct(b, dmg, p){
+ if(!b || !b.obj || b.dead) return false;
+ b.hp -= dmg;
+ if(b.hp <= 0){ collapseStruct(b); return true; }
+ if(p && dmg > 8) smallBoom(p, 1.2);
+ return false;
+}
+
+function collapseStruct(b){
+ b.dead = true; b.cT = 0; b.hp = 0;
+ const cx = (b.x0 + b.x1) / 2, cz = (b.z0 + b.z1) / 2, ch = b.y1_0 - b.y0;
+ const w = b.x1 - b.x0, d = b.z1 - b.z0;
+ const c = new THREE.Vector3(cx, b.y0 + ch * .45, cz);
+ explode(c, new THREE.Vector3(0, -1, 0), false);
+ for(let i = 0; i < 18; i++){
+  const sz = .5 + Math.random() * 1.6;
+  const m = new THREE.Mesh(new THREE.BoxGeometry(sz, sz * .7, sz * .9), i % 3 ? concM : darkM);
+  m.position.set(b.x0 + Math.random() * w, b.y0 + ch * (.3 + Math.random() * .7), b.z0 + Math.random() * d);
+  scene.add(m);
+  const v = new THREE.Vector3(m.position.x - cx, 0, m.position.z - cz).normalize().multiplyScalar(4 + Math.random() * 10);
+  v.y = 5 + Math.random() * 13;
+  debris.push({
+   mesh: m, vel: v, size: sz, age: 0,
+   spin: new THREE.Vector3((Math.random() - .5) * 10, (Math.random() - .5) * 10, (Math.random() - .5) * 10),
+   trail: 0, tt: 0
+  });
+ }
+ for(let i = 0; i < 9; i++){
+  const sz = .8 + Math.random() * 2.2;
+  const m = new THREE.Mesh(new THREE.BoxGeometry(sz, sz * .55, sz * (.7 + Math.random() * .6)), i % 2 ? concM : darkM);
+  m.position.set(b.x0 + Math.random() * w, b.y0 + sz * .2, b.z0 + Math.random() * d);
+  m.rotation.set(Math.random() * .5, Math.random() * 6, Math.random() * .5);
+  m.visible = false;
+  scene.add(m);
+  b.rub.push(m);
+ }
+ const dd = c.distanceTo(drone.pos);
+ trauma = Math.max(trauma, Math.max(0, 1 - dd / 220) * .8);
+ flashV = Math.max(flashV, Math.max(0, 1 - dd / 120) * .3);
+ bldKills++;
+ if(dd < 400) msg('Здание разрушено!');
+}
+
+function blast(p, power, rad){
+ let n = 0;
+ for(const b of destr){
+  if(b.dead) continue;
+  const qx = Math.max(b.x0, Math.min(p.x, b.x1)), qy = Math.max(b.y0, Math.min(p.y, b.y1_0)), qz = Math.max(b.z0, Math.min(p.z, b.z1));
+  const d = Math.hypot(qx - p.x, qy - p.y, qz - p.z);
+  if(d < rad && damageStruct(b, power * (1 - d / rad), null)) n++;
+ }
+ return n;
+}
+
+let bldKills = 0;
+
+function resetStructs(){
+ for(const b of destr){
+  b.hp = b.max; b.dead = false; b.cT = 0;
+  b.y1 = b.y1_0;
+  b.obj.scale.y = 1; b.obj.rotation.z = 0; b.obj.visible = true;
+  b.obj.updateMatrixWorld(true);
+  b.rub.forEach(m => { m.visible = false; });
+ }
+ bldKills = 0;
+}
+
+function updateStructs(dt){
+ const dp = drone.pos;
+ const cd = DISTS[cfg.dist].cull, cd2 = cd * cd;
+ for(const b of destr){
+  const dx = (b.x0 + b.x1) / 2 - dp.x, dz = (b.z0 + b.z1) / 2 - dp.z;
+  const d2 = dx * dx + dz * dz;
+  if(!b.dead || b.cT < 1.7) b.obj.visible = d2 < cd2;
+  const H = b.y1_0 - b.y0;
+  if(b.dead){
+   if(b.cT < 1.7){
+    b.cT += dt;
+    const k = Math.min(1, b.cT / 1.7), e = k * k;
+    b.obj.scale.y = 1 - .86 * e;
+    b.obj.rotation.z = Math.sin(b.cT * 26) * .012 * (1 - k);
+    b.y1 = b.y0 + H * (1 - .86 * e);
+    b.obj.updateMatrixWorld(true);
+    if(d2 < 600 * 600 && Math.random() < dt * 24){
+     const pos = new THREE.Vector3(b.x0 + Math.random() * (b.x1 - b.x0), b.y0 + H * (1 - e) * Math.random() + 1, b.z0 + Math.random() * (b.z1 - b.z0));
+     spawn('smoke', pos, new THREE.Vector3((Math.random() - .5) * 5, 2 + Math.random() * 3, (Math.random() - .5) * 5), 3 + Math.random() * 2, 6, 18 + Math.random() * 8, 0, .3, .55);
+    }
+    if(k >= 1){ b.rub.forEach(m => { m.visible = true; }); }
+   }
+  } else if(b.hp < b.max * .65 && d2 < 500 * 500){
+   b.sT -= dt;
+   if(b.sT <= 0){
+    b.sT = .25 + Math.random() * .2;
+    const pos = new THREE.Vector3(b.x0 + Math.random() * (b.x1 - b.x0), b.y1 - 1, b.z0 + Math.random() * (b.z1 - b.z0));
+    spawn('smoke', pos, new THREE.Vector3((Math.random() - .5), 3 + Math.random() * 2, (Math.random() - .5)), 3.2, 2, 8, 0, .15, .5);
+    if(b.hp < b.max * .35 && Math.random() < .5) spawn('fire', pos, new THREE.Vector3(0, 2, 0), .6, 2.4, .5, 0, 0, .8);
+   }
+  }
+ }
+}
+
+
 // ───────────── ЗЕМЛЯ ─────────────
 
 const ground = new THREE.Mesh(
- new THREE.PlaneGeometry(2600, 2600, 1, 1),
+ new THREE.PlaneGeometry(9000, 9000, 1, 1),
  new THREE.MeshStandardMaterial({ map: groundTex, roughness: 1 })
 );
 ground.rotation.x = -Math.PI / 2;
 ground.position.y = -2;
 scene.add(ground);
+staticObjs.push(ground);
+if(cfg.q !== 'low'){
+ (function(){
+  const c = document.createElement('canvas'); c.width = c.height = 512;
+  const x = c.getContext('2d');
+  const cols = ['rgba(25,40,12,.34)', 'rgba(125,112,60,.26)', 'rgba(70,95,38,.24)', 'rgba(90,70,40,.2)'];
+  for(let i = 0; i < 70; i++){
+   const px = Math.random() * 512, py = Math.random() * 512, r = 30 + Math.random() * 90, col = cols[i % 4];
+   for(const ox of [-512, 0, 512]) for(const oy of [-512, 0, 512]){
+    const g = x.createRadialGradient(px + ox, py + oy, 0, px + ox, py + oy, r);
+    g.addColorStop(0, col); g.addColorStop(1, 'rgba(0,0,0,0)');
+    x.fillStyle = g; x.fillRect(px + ox - r, py + oy - r, r * 2, r * 2);
+   }
+  }
+  const t = new THREE.CanvasTexture(c);
+  t.wrapS = t.wrapT = THREE.RepeatWrapping; t.repeat.set(9, 9);
+  t.colorSpace = THREE.SRGBColorSpace;
+  const o = new THREE.Mesh(new THREE.PlaneGeometry(9000, 9000), new THREE.MeshStandardMaterial({
+   map: t, transparent: true, depthWrite: false, roughness: 1,
+   polygonOffset: true, polygonOffsetFactor: -3, polygonOffsetUnits: -3
+  }));
+  o.rotation.x = -Math.PI / 2; o.position.y = -1.97;
+  scene.add(o);
+  staticObjs.push(o);
+ })();
+}
 
 // ───────────── ХОЛМЫ И ДОРОГИ ─────────────
 
@@ -502,10 +770,13 @@ const roadSegs = [
  { cx: 0, cz: -140, w: 13, len: 520, rot: .04 },
  { cx: -125, cz: -210, w: 10, len: 300, rot: -.5 },
  { cx: 115, cz: -350, w: 9, len: 260, rot: .45 },
- { cx: 330, cz: -800, w: 12, len: 1100, rot: -.12 },
- { cx: -380, cz: -900, w: 11, len: 1000, rot: .15 },
- { cx: 0, cz: -760, w: 10, len: 1500, rot: Math.PI / 2 + .05 },
- { cx: 0, cz: -1300, w: 10, len: 1300, rot: Math.PI / 2 - .08 }
+ { cx: 330, cz: -1100, w: 12, len: 1900, rot: -.12 },
+ { cx: -380, cz: -1150, w: 11, len: 1900, rot: .15 },
+ { cx: 0, cz: -760, w: 10, len: 2900, rot: Math.PI / 2 + .05 },
+ { cx: 0, cz: -1300, w: 10, len: 2900, rot: Math.PI / 2 - .08 },
+ { cx: 0, cz: -1900, w: 10, len: 2900, rot: Math.PI / 2 + .02 },
+ { cx: 650, cz: -1400, w: 11, len: 2200, rot: .06 },
+ { cx: -700, cz: -1500, w: 10, len: 2000, rot: -.05 }
 ];
 
 function distToRoad(x, z){
@@ -545,24 +816,36 @@ function makeHill(x, z, R, h, seg){
  m.position.set(x, h / 2 - 5, z);
  m.scale.z = 1.7;
  scene.add(m);
+ staticObjs.push(m);
  hills.push({ x, z, R, h });
 }
 
 (function makeHills(){
  let placed = 0, tries = 0;
- while(placed < 64 && tries < 1200){
+ while(placed < 110 && tries < 2400){
   tries++;
   const R = 30 + rnd() * 50, h = 8 + rnd() * 26;
-  const x = (rnd() - .5) * 1900, z = -170 - rnd() * 1500;
+  const x = (rnd() - .5) * 2900, z = -170 - rnd() * 2300;
   if(distToRoad(x, z) < R * 1.7 + 12) continue;
   if(hills.some(o => Math.hypot(x - o.x, z - o.z) < (R + o.R) * .8)) continue;
   makeHill(x, z, R, h, 14);
   placed++;
  }
  // дальние горы по краям карты
- for(let i = 0; i < 14; i++){
+ for(let i = 0; i < 22; i++){
   const side = i % 2 ? 1 : -1;
-  makeHill(side * (820 + rnd() * 150), -150 - rnd() * 1500, 120 + rnd() * 70, 60 + rnd() * 60, 18);
+  makeHill(side * (1330 + rnd() * 160), -150 - rnd() * 2350, 120 + rnd() * 70, 60 + rnd() * 60, 18);
+ }
+ // горы за границей карты: край больше не пустой
+ for(let i = 0; i < 12; i++){
+  const side = i % 2 ? 1 : -1;
+  makeHill(side * (1750 + rnd() * 250), 200 - rnd() * 2900, 180 + rnd() * 90, 80 + rnd() * 60, 18);
+ }
+ for(let i = 0; i < 14; i++){
+  makeHill((i / 13 - .5) * 3800, -2750 - rnd() * 200, 180 + rnd() * 90, 90 + rnd() * 60, 18);
+ }
+ for(let i = 0; i < 8; i++){
+  makeHill((i / 7 - .5) * 3200, 260 + rnd() * 90, 140 + rnd() * 70, 50 + rnd() * 40, 18);
  }
 })();
 
@@ -585,6 +868,7 @@ function road(cx, cz, w, l, rot, idx){
  o.rotation.z = rot;
  o.position.set(cx, -1.8, cz);
  scene.add(o);
+ staticObjs.push(o);
 }
 roadSegs.forEach((r, i) => road(r.cx, r.cz, r.w, r.len, r.rot, i));
 
@@ -683,11 +967,11 @@ function building(x, z, s = 1, broken = false){
 
  scene.add(g);
 
- boxes.push({
+ regBox({
   x0: x - w / 2, x1: x + w / 2,
   y0: base, y1: base + h + topExtra,
   z0: z - d / 2, z1: z + d / 2
- });
+ }, g, broken ? 70 : Math.round(100 + 90 * s));
 }
 
 // ───────────── РАЗНЫЕ ТИПЫ ПОСТРОЕК ─────────────
@@ -745,7 +1029,7 @@ function addBox(g, w, h, d, m, x, y, z){
 }
 
 function addCollider(x, z, w, h, d, y0 = -2){
- boxes.push({ x0: x - w / 2, x1: x + w / 2, y0, y1: y0 + h, z0: z - d / 2, z1: z + d / 2 });
+ regBox({ x0: x - w / 2, x1: x + w / 2, y0, y1: y0 + h, z0: z - d / 2, z1: z + d / 2 }, scene.children[scene.children.length - 1], Math.max(70, Math.min(200, Math.round(50 + w * d * h / 40))));
 }
 
 function okSpot(x, z, r){
@@ -775,6 +1059,8 @@ function house(x, z, barn){
  g.add(roof);
 
  addBox(g, .8, 2.4, .8, brickM, w * .25, h + rh * .7, 0);
+ addWindows(g, w, h, d, Math.max(2.3, h * .62), Math.max(2, Math.round(w / 3.4)), Math.max(1, Math.round(d / 4)));
+ addBox(g, 2.6, .25, 1.2, concM, 0, .12, d / 2 + .6);
  addBox(g, barn ? 4 : 1.3, barn ? 4 : 2.2, .15, darkM, (rnd() - .5) * w * .3, barn ? 2 : 1.1, d / 2 + .05);
 
  scene.add(g);
@@ -845,7 +1131,7 @@ function waterTower(x, z){
  cone.position.y = 18.1;
  g.add(cone);
  scene.add(g);
- boxes.push({ x0: x - 3.5, x1: x + 3.5, y0: 10.5, y1: 17.5, z0: z - 3.5, z1: z + 3.5 });
+ regBox({ x0: x - 3.5, x1: x + 3.5, y0: 10.5, y1: 17.5, z0: z - 3.5, z1: z + 3.5 }, g, 60);
 }
 
 function mast(x, z){
@@ -916,14 +1202,14 @@ function bunker(x, z){
 
  const centers = [{ x: -150, z: -300 }, { x: 175, z: -470 }];
  let tries = 0;
- while(centers.length < 11 && tries < 500){
+ while(centers.length < 22 && tries < 1600){
   tries++;
-  const x = (rnd() - .5) * 1700, z = -200 - rnd() * 1300;
+  const x = (rnd() - .5) * 2800, z = -200 - rnd() * 2150;
   if(centers.every(c => Math.hypot(c.x - x, c.z - z) > 220) && distToRoad(x, z) < 120) centers.push({ x, z });
  }
 
  for(const c of centers){
-  const n = 8 + ((rnd() * 8) | 0);
+  const n = 11 + ((rnd() * 9) | 0);
   for(let i = 0; i < n; i++){
    const r = rnd();
    if(r < .5) attempt(9, (x, z) => house(x, z, false), c.x, c.z, 85);
@@ -940,17 +1226,17 @@ function bunker(x, z){
   let k = 0, t = 0;
   while(k < n && t < n * 40){
    t++;
-   const x = (rnd() - .5) * 1900, z = -90 - rnd() * 1580;
+   const x = (rnd() - .5) * 2900, z = -90 - rnd() * 2350;
    if(okSpot(x, z, r)){ fn(x, z); k++; }
   }
  };
- lone(26, 16, (x, z) => building(x, z, .55 + rnd() * .75, rnd() > .55));
- lone(16, 10, bunker);
- lone(9, 6, mast);
- lone(6, 8, waterTower);
- lone(6, 24, factory);
- lone(8, 14, silos);
- lone(10, 14, (x, z) => house(x, z, rnd() > .7));
+ lone(56, 16, (x, z) => building(x, z, .55 + rnd() * .75, rnd() > .55));
+ lone(30, 10, bunker);
+ lone(13, 6, mast);
+ lone(9, 8, waterTower);
+ lone(12, 24, factory);
+ lone(11, 14, silos);
+ lone(34, 14, (x, z) => house(x, z, rnd() > .7));
 })();
 
 // ───────────── ДЕРЕВЬЯ, КАМНИ, ПОЛЯ ─────────────
@@ -972,15 +1258,15 @@ function bunker(x, z){
   });
  };
 
- for(let f = 0; f < 22; f++){
-  const cx = (rnd() - .5) * 1800, cz = 50 - rnd() * 1650, rad = 40 + rnd() * 90, bp = rnd();
+ for(let f = 0; f < 32; f++){
+  const cx = (rnd() - .5) * 2800, cz = 50 - rnd() * 2500, rad = 40 + rnd() * 90, bp = rnd();
   const n = 40 + ((rnd() * 70) | 0);
   for(let i = 0; i < n; i++){
    const a = rnd() * 6.28, d = Math.sqrt(rnd()) * rad;
    put(cx + Math.cos(a) * d, cz + Math.sin(a) * d, bp);
   }
  }
- for(let i = 0; i < 380; i++) put((rnd() - .5) * 1900, 60 - rnd() * 1700, .5);
+ for(let i = 0; i < 560; i++) put((rnd() - .5) * 2900, 60 - rnd() * 2550, .5);
 
  const m4 = new THREE.Matrix4(), q = new THREE.Quaternion(), e = new THREE.Euler();
  const p = new THREE.Vector3(), sc = new THREE.Vector3(), col = new THREE.Color();
@@ -991,6 +1277,7 @@ function bunker(x, z){
   im.instanceMatrix.needsUpdate = true;
   if(im.instanceColor) im.instanceColor.needsUpdate = true;
   scene.add(im);
+  staticObjs.push(im);
  });
 
  {
@@ -1070,6 +1357,7 @@ function bunker(x, z){
  im.instanceMatrix.needsUpdate = true;
  if(im.instanceColor) im.instanceColor.needsUpdate = true;
  scene.add(im);
+ staticObjs.push(im);
 })();
 
 (function makeFields(){
@@ -1171,7 +1459,7 @@ const cloudMat = new THREE.MeshStandardMaterial({
  color: 0xf1f4f2, roughness: 1, transparent: true, opacity: .8
 });
 
-for(let i = 0; i < 60; i++){
+for(let i = 0; i < 90; i++){
  const group = new THREE.Group();
  for(let j = 0; j < 6; j++){
   const p = new THREE.Mesh(new THREE.SphereGeometry(9 + rnd() * 8, 9, 7), cloudMat);
@@ -1179,22 +1467,23 @@ for(let i = 0; i < 60; i++){
   p.scale.y = .5;
   group.add(p);
  }
- group.position.set((rnd() - .5) * 2000, 95 + rnd() * 70, -rnd() * 1700);
+ group.position.set((rnd() - .5) * 3000, 95 + rnd() * 70, -rnd() * 2600);
  scene.add(group);
+ staticObjs.push(group);
 }
 
 // ───────────── МАРКЕРЫ ─────────────
 
 const markers = [];
-for(let i = 0; i < 24; i++){
+for(let i = 0; i < 36; i++){
  const m = new THREE.Mesh(
   new THREE.OctahedronGeometry(2.2),
   new THREE.MeshStandardMaterial({
    color: 0xffc85c, emissive: 0x6d3900, emissiveIntensity: 1, roughness: .4
   })
  );
- const x = (rnd() - .5) * 900;
- const z = -160 - rnd() * 1400;
+ const x = (rnd() - .5) * 1700;
+ const z = -160 - rnd() * 2200;
  const y = 10 + rnd() * 30;
  m.position.set(x, y, z);
  scene.add(m);
@@ -1241,9 +1530,20 @@ for(const sx of [-1, 1]){
  propSpin.push({ spin, holder });
 }
 
+const warhead = makeWarheadView();
+propGroup.add(warhead);
+
+function makeWarheadView(){
+ const g = makeWarhead();
+ g.scale.setScalar(1.7);
+ return g;
+}
+
 function layoutProps(){
  const halfH = Math.tan(THREE.MathUtils.degToRad(camera.fov / 2)) * 1.4;
  const halfW = halfH * camera.aspect;
+ warhead.position.set(0, -halfH * .98, -2.15);
+ warhead.rotation.set(.38, 0, 0);
  propSpin.forEach(p => {
   p.holder.position.set(p.holder.userData.sx * Math.min(halfW * .82, 1.1), -halfH * .9, -1.4);
  });
@@ -1255,6 +1555,7 @@ layoutProps();
 let active = false;
 let crashed = false;
 let crashT = 0;
+let rammedCrash = false;
 let trauma = 0;
 let flashV = 0;
 let crashes = 0;
@@ -1290,6 +1591,8 @@ const debrisMats = [
 ];
 
 function spawn(kind, pos, vel, life, s0, s1, g = 0, drag = 0, op = 1){
+ if(kind !== 'fire' && Math.random() > FXM[cfg.fx]) return;
+ if(particles.length > 300 && kind !== 'fire') return;
  const add = kind !== 'smoke';
  const m = new THREE.SpriteMaterial({
   map: kind === 'smoke' ? smokeTex : kind === 'spark' ? sparkTex : fireTex,
@@ -1523,9 +1826,9 @@ const gunM = new THREE.MeshStandardMaterial({ color: 0x2b2f2d, roughness: .5, me
 const burntM = new THREE.MeshStandardMaterial({ color: 0x1a1a18, roughness: 1 });
 
 const TT = {
- heavy: { sc: 1.15, camo: camoGreen, dmg: 26, every: 3.4, spd: 90, spread: .03, range: 200, turn: 1.0, maxEl: .5, warm: .9, sz: 1.5, L: 5.0 },
- light: { sc: .8, camo: camoSand, dmg: 11, every: 1.2, spd: 120, spread: .05, range: 170, turn: 1.8, maxEl: .75, warm: .6, sz: 1.0, L: 3.6 },
- aa: { sc: .95, camo: camoDark, dmg: 7, every: .3, spd: 160, spread: .06, range: 240, turn: 2.4, maxEl: 1.45, warm: .5, sz: .7, L: 3.0, twin: true, aa: true }
+ heavy: { sc: 1.15, camo: camoGreen, dmg: 26, every: 3.4, spd: 90, spread: .03, range: 170, turn: 1.0, maxEl: .5, warm: .9, sz: 1.5, L: 5.0 },
+ light: { sc: .8, camo: camoSand, dmg: 11, every: 1.2, spd: 120, spread: .05, range: 145, turn: 1.8, maxEl: .75, warm: .6, sz: 1.0, L: 3.6 },
+ aa: { sc: .95, camo: camoDark, dmg: 7, every: .3, spd: 160, spread: .06, range: 205, turn: 2.4, maxEl: 1.45, warm: .5, sz: .7, L: 3.0, twin: true, aa: true }
 };
 
 const tracerGeo = new THREE.BoxGeometry(.16, .16, 3.2);
@@ -1552,6 +1855,26 @@ function buildTank(t){
  tbox(g, 1.3 * s, .45 * s, 2.3 * s, gunM, -2.9 * s, 1.85 * s, 0);
  tbox(g, .9 * s, .5 * s, .7 * s, hm, -2.4 * s, 2.0 * s, 1.0 * s);
 
+ // катки, крылья, ящики, фары, выхлоп
+ for(const zz of [1.97 * s, -1.97 * s]){
+  tbox(g, 7.0 * s, .07 * s, .75 * s, hm, 0, 1.2 * s, zz * .92);
+  tbox(g, 6.6 * s, .38 * s, .06 * s, hm, 0, .82 * s, zz * 1.02);
+ }
+ tbox(g, 1.0 * s, .35 * s, .5 * s, woodM, -1.2 * s, 1.42 * s, 1.55 * s);
+ tbox(g, .7 * s, .3 * s, .5 * s, gunM, .6 * s, 1.4 * s, -1.6 * s);
+ tbox(g, .08 * s, .08 * s, 3.2 * s, rustM, 1.0 * s, 1.5 * s, 1.15 * s);
+ for(const zz of [-.9 * s, .9 * s]){
+  const lamp = new THREE.Mesh(new THREE.BoxGeometry(.22 * s, .18 * s, .22 * s), new THREE.MeshStandardMaterial({ color: 0xddd9b0, emissive: 0x554f22, roughness: .3 }));
+  lamp.position.set(3.55 * s, 1.1 * s, zz);
+  g.add(lamp);
+ }
+ for(const zz of [-.6 * s, .6 * s]){
+  const ex = new THREE.Mesh(new THREE.CylinderGeometry(.12 * s, .14 * s, .6 * s, 8), gunM);
+  ex.rotation.z = Math.PI / 2;
+  ex.position.set(-3.4 * s, 1.1 * s, zz);
+  g.add(ex);
+ }
+
  const tur = new THREE.Group();
  tur.position.set(-.3 * s, 1.8 * s, 0);
  const bar = new THREE.Group();
@@ -1566,6 +1889,15 @@ function buildTank(t){
   tbox(tur, 1.3 * s, .75 * s, 2.0 * s, hm, 1.5 * s, .4 * s, 0, -.35);
   tbox(tur, .5 * s, .7 * s, 1.0 * s, gunM, 2.05 * s, .5 * s, 0);
   bar.position.set(1.7 * s, .5 * s, 0);
+ }
+ if(!T.aa){
+  for(let i = -1; i <= 1; i++){
+   const sm = new THREE.Mesh(new THREE.CylinderGeometry(.08 * s, .08 * s, .3 * s, 6), gunM);
+   sm.rotation.z = -.9;
+   sm.position.set(.9 * s, .8 * s, i * .55 * s + (i === 0 ? 0 : (i > 0 ? 1 : -1) * .75 * s));
+   tur.add(sm);
+  }
+  tbox(tur, .8 * s, .25 * s, .3 * s, gunM, -1.5 * s, .35 * s, 0);
  }
  const hatch = new THREE.Mesh(new THREE.CylinderGeometry(.36 * s, .4 * s, .22 * s, 10), hm);
  hatch.position.set(-.6 * s, T.aa ? 1.0 * s : .95 * s, .5 * s);
@@ -1582,6 +1914,12 @@ function buildTank(t){
   b.rotation.z = -Math.PI / 2;
   b.position.set(L / 2, 0, oz);
   bar.add(b);
+  if(!T.aa){
+   const sl = new THREE.Mesh(new THREE.CylinderGeometry(rad * 1.45, rad * 1.45, L * .22, 10), gunM);
+   sl.rotation.z = -Math.PI / 2;
+   sl.position.set(L * .5, 0, oz);
+   bar.add(sl);
+  }
   const br = new THREE.Mesh(new THREE.BoxGeometry(.5 * s, rad * 2.6, rad * 2.6), gunM);
   br.position.set(L, 0, oz);
   bar.add(br);
@@ -1623,9 +1961,9 @@ function addTank(x, z, type, yaw, moving, len){
 
  const centers = [[48, -250], [-120, -340], [10, -520], [190, -430]];
  let tries = 0;
- while(centers.length < 9 && tries < 300){
+ while(centers.length < 12 && tries < 500){
   tries++;
-  const x = (rnd() - .5) * 1700, z = -300 - rnd() * 1300;
+  const x = (rnd() - .5) * 2700, z = -300 - rnd() * 2050;
   if(centers.every(c => Math.hypot(c[0] - x, c[1] - z) > 160)) centers.push([x, z]);
  }
  for(const c of centers){
@@ -1689,6 +2027,7 @@ function smallBoom(p, k){
 // ── урон дрону
 function hurt(dmg, text, pos){
  if(crashed) return;
+ if(mode === 'train'){ if(text) msg(text); return; }
  drone.hp = Math.max(0, drone.hp - dmg);
  lastHurt = time;
  if(!text && mission && mission.noHit) endMission(false, 'вы получили попадание');
@@ -1745,7 +2084,11 @@ function updateShells(dt){
    if(d < 2.3){ dead = true; smallBoom(s.pos, 1); hurt(s.dmg); }
    else if(d < 10 && !s.near){ s.near = true; trauma = Math.max(trauma, .16); }
   }
-  if(!dead && (s.pos.y < -2 || hitsStatic(s.pos))){ dead = true; smallBoom(s.pos, 1.3); }
+  if(!dead){
+   const hb = boxAt(s.pos);
+   if(hb){ dead = true; smallBoom(s.pos, 1.3); damageStruct(hb, 22, s.pos); }
+   else if(s.pos.y < -2 || hitsStatic(s.pos)){ dead = true; smallBoom(s.pos, 1.3); }
+  }
 
   if(dead){ scene.remove(s.g); shells.splice(i, 1); }
  }
@@ -1758,6 +2101,7 @@ function destroyTank(t){
  kills++;
  const p = new THREE.Vector3(t.x, -2 + 1.5 * T.sc, t.z);
  explode(p, new THREE.Vector3(0, -1, 0), true);
+ blast(p, 60, 12);
 
  t.group.traverse(o => { if(o.isMesh) o.material = burntM; });
  t.group.updateMatrixWorld(true);
@@ -1776,8 +2120,9 @@ function destroyTank(t){
   trail: 3, tt: 0, keep: true
  });
 
- trauma = Math.max(trauma, .7);
- flashV = Math.max(flashV, .45);
+ const dd = p.distanceTo(drone.pos), kk = Math.max(0, 1 - dd / 260);
+ trauma = Math.max(trauma, .7 * kk);
+ flashV = Math.max(flashV, .45 * kk);
 }
 
 function wreck(t, dt){
@@ -1800,19 +2145,22 @@ function ramTanks(p){
   if(dx * dx + dz * dz > rr * rr) continue;
   if(p.y > -2 + 3.2 * T.sc + R) continue;
   destroyTank(t);
-  pts++;
+  myK++;
+  if(mode !== 'train') pts++;
   $('pts').textContent = pts;
   saveProgress();
-  drone.vel.multiplyScalar(.5);
   const left = tanks.length - kills;
-  hurt(32, left > 0 ? 'Танк уничтожен! +1 очко · осталось: ' + left : 'ВСЕ ТАНКИ УНИЧТОЖЕНЫ! +1 очко · миссия выполнена', p);
-  if(crashed) return;
+  rammedCrash = true;
+  crash(p.clone(), 'танком');
+  msg(left > 0 ? 'Танк уничтожен! +1 очко · осталось: ' + left : 'ВСЕ ТАНКИ УНИЧТОЖЕНЫ! +1 очко');
+  $('sgr').textContent = 'таран танка · цель поражена · восстановление связи…';
+  return;
  }
 }
 
 // ── ИИ танков
 function updateTanks(dt){
- const can = active && !crashed;
+ const can = active && !crashed && mode !== 'train';
  lockN = 0;
  for(const t of tanks){
   if(!t.alive){ wreck(t, dt); continue; }
@@ -1919,10 +2267,20 @@ function drawRadar(){
   rctx.fillStyle = s.locking ? '#ff3b30' : '#ffe066';
   rctx.fillRect(C + u - 2, C + v - 2, 4, 4);
  }
+ for(const b of bots){
+  if(b.dead) continue;
+  const dx = b.pos.x - drone.pos.x, dz = b.pos.z - drone.pos.z;
+  let u = (dx * rx + dz * rz) / RANGE * RR, v = -(dx * fx + dz * fz) / RANGE * RR;
+  const L = Math.hypot(u, v);
+  if(L > RR - 6){ u *= (RR - 6) / L; v *= (RR - 6) / L; }
+  rctx.fillStyle = '#' + BOT_COLS[b.i % 3].toString(16).padStart(6, '0');
+  rctx.beginPath(); rctx.moveTo(C + u, C + v - 6); rctx.lineTo(C + u + 5, C + v + 4); rctx.lineTo(C + u - 5, C + v + 4); rctx.closePath(); rctx.fill();
+ }
  rctx.fillStyle = '#bff6ff';
  rctx.beginPath(); rctx.moveTo(C, C - 10); rctx.lineTo(C + 7, C + 8); rctx.lineTo(C - 7, C + 8); rctx.closePath(); rctx.fill();
 }
 
+let radarK = 0;
 function updateUI(dt){
  dmgV = Math.max(0, dmgV - dt * 1.4);
  $('dmg').style.opacity = dmgV * .85;
@@ -1932,7 +2290,7 @@ function updateUI(dt){
  const pct = hp / maxHp() * 100;
  f.style.width = pct + '%';
  f.style.background = 'hsl(' + (pct * 1.15) + ',75%,50%)';
- if(mission || mode === 'free'){
+ if(mission || mode === 'free' || mode === 'train'){
   const ot = objectiveText();
   if(ot !== lastObj){
    lastObj = ot;
@@ -1960,7 +2318,7 @@ function updateUI(dt){
   lk.style.opacity = 0;
   lockShown = 0;
  }
- drawRadar();
+ if((radarK++ & 1) === 0) drawRadar();
 }
 
 // ───────────── СОЛДАТЫ ─────────────
@@ -1970,11 +2328,28 @@ const SOLD_SC = 1.5;
 const uniMs = [0x4b5a3a, 0x555a52, 0x6a6247].map(c => new THREE.MeshStandardMaterial({ color: c, roughness: .9 }));
 const skinM = mat(0xc99a78), helmM = mat(0x2f3a2a);
 const rifM = new THREE.MeshStandardMaterial({ color: 0x1f1f1d, roughness: .5, metalness: .5 });
-const legGeo = new THREE.BoxGeometry(.2, .8, .24);
-const torsoGeo = new THREE.BoxGeometry(.32, .68, .5);
-const headGeo = new THREE.BoxGeometry(.22, .22, .22);
-const helmGeo = new THREE.BoxGeometry(.28, .12, .3);
-const rifGeo = new THREE.BoxGeometry(.9, .07, .07);
+const vestM = mat(0x2d3326, .9), packM = mat(0x3b4030, .9), bootM = mat(0x1a1612, .9), gloveM = mat(0x24241f, .9);
+const SG = {
+ torso: mergeBoxes([{ w: .32, h: .52, d: .5, x: 0, y: 1.2, z: 0 }, { w: .34, h: .16, d: .52, x: 0, y: .9, z: 0 }]),
+ vest: mergeBoxes([
+  { w: .1, h: .42, d: .46, x: .15, y: 1.24, z: 0 }, { w: .08, h: .4, d: .44, x: -.15, y: 1.24, z: 0 },
+  { w: .08, h: .12, d: .14, x: .2, y: 1.02, z: .15 }, { w: .08, h: .12, d: .14, x: .2, y: 1.02, z: -.15 },
+  { w: .36, h: .05, d: .54, x: 0, y: .84, z: 0 }
+ ]),
+ pack: mergeBoxes([{ w: .2, h: .44, d: .34, x: -.27, y: 1.26, z: 0 }, { w: .14, h: .1, d: .3, x: -.28, y: 1.52, z: 0 }]),
+ head: new THREE.BoxGeometry(.2, .22, .2),
+ face: mergeBoxes([{ w: .02, h: .03, d: .04, x: .1, y: 1.65, z: .05 }, { w: .02, h: .03, d: .04, x: .1, y: 1.65, z: -.05 }, { w: .02, h: .05, d: .04, x: .1, y: 1.6, z: 0 }]),
+ helm: mergeBoxes([{ w: .28, h: .12, d: .3, x: 0, y: 1.77, z: 0 }, { w: .35, h: .03, d: .37, x: 0, y: 1.71, z: 0 }, { w: .05, h: .08, d: .1, x: .12, y: 1.8, z: 0 }]),
+ leg: new THREE.BoxGeometry(.19, .66, .22),
+ boot: new THREE.BoxGeometry(.32, .14, .25),
+ arm: new THREE.BoxGeometry(.13, .5, .13),
+ hand: new THREE.BoxGeometry(.1, .1, .1),
+ rifle: mergeBoxes([
+  { w: .85, h: .07, d: .06, x: 0, y: 0, z: 0 }, { w: .22, h: .15, d: .05, x: -.2, y: -.09, z: 0 },
+  { w: .08, h: .1, d: .05, x: .1, y: -.08, z: 0 }, { w: .05, h: .05, d: .05, x: .45, y: .03, z: 0 },
+  { w: .12, h: .1, d: .06, x: -.02, y: .07, z: 0 }
+ ])
+};
 
 function soldFree(x, z){
  if(insideHill(x, z, 1.05)) return false;
@@ -1994,21 +2369,26 @@ function addSoldier(x, z){
  const g = new THREE.Group();
  g.scale.setScalar(SOLD_SC);
  const um = uniMs[(Math.random() * uniMs.length) | 0];
- const legL = new THREE.Group(), legR = new THREE.Group();
+ const legL = new THREE.Group(), legR = new THREE.Group(), armL = new THREE.Group(), armR = new THREE.Group();
  legL.position.set(0, .8, -.12); legR.position.set(0, .8, .12);
  for(const lg of [legL, legR]){
-  const m = new THREE.Mesh(legGeo, um);
-  m.position.y = -.4;
-  lg.add(m);
+  const m = new THREE.Mesh(SG.leg, um); m.position.y = -.33; lg.add(m);
+  const bt = new THREE.Mesh(SG.boot, bootM); bt.position.set(.04, -.73, 0); lg.add(bt);
   g.add(lg);
  }
- const torso = new THREE.Mesh(torsoGeo, um); torso.position.y = 1.14; g.add(torso);
- const head = new THREE.Mesh(headGeo, skinM); head.position.y = 1.62; g.add(head);
- const helm = new THREE.Mesh(helmGeo, helmM); helm.position.y = 1.76; g.add(helm);
- const rif = new THREE.Mesh(rifGeo, rifM); rif.position.set(.45, 1.2, .22); g.add(rif);
+ armL.position.set(0, 1.42, -.23); armR.position.set(0, 1.42, .23);
+ for(const ar of [armL, armR]){
+  const m = new THREE.Mesh(SG.arm, um); m.position.y = -.25; ar.add(m);
+  const hd = new THREE.Mesh(SG.hand, gloveM); hd.position.y = -.55; ar.add(hd);
+  g.add(ar);
+ }
+ g.add(new THREE.Mesh(SG.torso, um), new THREE.Mesh(SG.vest, vestM), new THREE.Mesh(SG.pack, packM));
+ const head = new THREE.Mesh(SG.head, skinM); head.position.y = 1.62; g.add(head);
+ g.add(new THREE.Mesh(SG.face, darkM), new THREE.Mesh(SG.helm, helmM));
+ const rif = new THREE.Mesh(SG.rifle, rifM); rif.position.set(.38, 1.2, .1); rif.rotation.z = -.05; g.add(rif);
 
  const s = {
-  g, legL, legR, x, z, x0: x, z0: z, yaw: Math.random() * 6.28,
+  g, legL, legR, armL, armR, rif, x, z, x0: x, z0: z, yaw: Math.random() * 6.28,
   tx: x, tz: z, wait: Math.random() * 3, alive: true,
   cool: 1 + Math.random(), lock: 0, los: false, losT: 0, locking: false, ph: Math.random() * 6
  };
@@ -2029,9 +2409,9 @@ function addSoldier(x, z){
   }
  }
  let k = 0, tries = 0;
- while(k < 8 && tries < 300){
+ while(k < 12 && tries < 500){
   tries++;
-  const x = (rnd() - .5) * 1700, z = -150 - rnd() * 1450;
+  const x = (rnd() - .5) * 2700, z = -150 - rnd() * 2250;
   if(soldFree(x, z)){
    addSoldier(x, z);
    if(soldFree(x + 3, z + 2)) addSoldier(x + 3, z + 2);
@@ -2068,11 +2448,11 @@ function fireSoldier(s){
 }
 
 function updateSoldiers(dt){
- const can = active && !crashed;
+ const can = active && !crashed && mode !== 'train';
  for(const s of soldiers){
   if(!s.alive) continue;
   const dx = drone.pos.x - s.x, dz = drone.pos.z - s.z, h2 = dx * dx + dz * dz;
-  const near = h2 < 450 * 450;
+  const sr = DISTS[cfg.dist].sold, near = h2 < sr * sr;
   s.g.visible = near;
   if(!near){ s.locking = false; continue; }
 
@@ -2118,6 +2498,10 @@ function updateSoldiers(dt){
   const sw = walking ? Math.sin(s.ph) * .7 : 0;
   s.legL.rotation.z = sw;
   s.legR.rotation.z = -sw;
+  s.armL.rotation.z = engaged ? 1.3 : -sw * .7;
+  s.armR.rotation.z = engaged ? 1.05 : sw * .7;
+  s.rif.rotation.z = engaged ? .12 : -.05;
+  s.rif.position.y = engaged ? 1.3 : 1.2;
   s.g.position.set(s.x, -2, s.z);
   s.g.rotation.y = s.yaw;
  }
@@ -2145,6 +2529,264 @@ function resetSoldiers(){
  }
 }
 
+// ───────────── ДЕТАЛЬНАЯ МОДЕЛЬ FPV-ДРОНА ─────────────
+
+function makeDroneModel(col){
+ const g = new THREE.Group(), spins = [];
+ const carbon = new THREE.MeshStandardMaterial({ color: 0x17191c, roughness: .4, metalness: .4 });
+ const carbon2 = new THREE.MeshStandardMaterial({ color: 0x2a2d31, roughness: .5, metalness: .3 });
+ const accent = new THREE.MeshStandardMaterial({ color: col, roughness: .45, emissive: col, emissiveIntensity: .45 });
+ const alu = new THREE.MeshStandardMaterial({ color: 0x9aa1a8, roughness: .3, metalness: .85 });
+ const rub = new THREE.MeshStandardMaterial({ color: 0x0e0e0e, roughness: .9 });
+ const lens = new THREE.MeshStandardMaterial({ color: 0x66e0ff, emissive: 0x2aa0d0, emissiveIntensity: .8, roughness: .1 });
+ const olive = new THREE.MeshStandardMaterial({ color: 0x5c6b3a, roughness: .6, metalness: .2 });
+ const add = (geo, m, x, y, z, rx = 0, ry = 0, rz = 0) => {
+  const o = new THREE.Mesh(geo, m); o.position.set(x, y, z); o.rotation.set(rx, ry, rz); g.add(o); return o;
+ };
+ const B = (w, h, d) => new THREE.BoxGeometry(w, h, d);
+
+ // рама: нижняя и верхняя пластины, стойки
+ add(B(.15, .016, .36), carbon, 0, -.02, 0);
+ add(B(.13, .012, .3), carbon2, 0, .062, .01);
+ for(const sx of [-1, 1]) for(const sz of [-1, 1]){
+  add(new THREE.CylinderGeometry(.008, .008, .08, 6), alu, sx * .055, .02, sz * .12);
+ }
+ // электроника и аккумулятор
+ add(B(.1, .03, .1), new THREE.MeshStandardMaterial({ color: 0x1d4a2a, roughness: .6 }), 0, .018, .02);
+ add(B(.085, .05, .17), new THREE.MeshStandardMaterial({ color: 0x3a3f46, roughness: .55 }), 0, .1, .03);
+ add(B(.09, .054, .02), accent, 0, .1, .0);
+ add(B(.09, .054, .02), accent, 0, .1, .07);
+ // камера спереди
+ add(B(.056, .056, .05), carbon, 0, .035, -.185);
+ add(new THREE.CylinderGeometry(.018, .018, .02, 12), lens, 0, .035, -.215, Math.PI / 2, 0, 0);
+ add(B(.07, .012, .05), accent, 0, .068, -.18, -.45, 0, 0);
+ // антенны
+ add(new THREE.CylinderGeometry(.004, .004, .12, 5), rub, .02, .1, .2, .5, 0, 0);
+ add(new THREE.CylinderGeometry(.003, .003, .09, 5), rub, -.02, .1, .19, .6, 0, .1);
+
+ // лучи, моторы, винты
+ const arm = B(.3, .012, .03);
+ const motorG = new THREE.CylinderGeometry(.024, .026, .034, 14);
+ const bellG = new THREE.CylinderGeometry(.021, .021, .014, 14);
+ const bladeG = B(.27, .003, .026);
+ const discG = new THREE.CircleGeometry(.135, 24);
+ const discM = new THREE.MeshBasicMaterial({ color: 0x151515, transparent: true, opacity: .14, side: THREE.DoubleSide, depthWrite: false });
+ const ledG = B(.02, .012, .02);
+ for(const sx of [-1, 1]) for(const sz of [-1, 1]){
+  const a = Math.atan2(sz, sx) * -1;
+  const arm1 = add(arm, carbon, sx * .082, 0, sz * .095, 0, sx * sz > 0 ? -.82 : .82, 0);
+  arm1.scale.x = 1.05;
+  const mx = sx * .163, mz = sz * .17;
+  add(motorG, alu, mx, .004, mz);
+  add(bellG, accent, mx, .028, mz);
+  add(ledG, accent, sx * .125, .012, sz * .13);
+  const sp = new THREE.Group();
+  sp.position.set(mx, .042, mz);
+  const b1 = new THREE.Mesh(bladeG, rub); sp.add(b1);
+  const b2 = b1.clone(); b2.rotation.y = Math.PI / 2; sp.add(b2);
+  const hub = new THREE.Mesh(new THREE.CylinderGeometry(.007, .007, .008, 8), alu); sp.add(hub);
+  g.add(sp);
+  spins.push({ g: sp, dir: (sx * sz > 0) ? 1 : -1 });
+  const disc = new THREE.Mesh(discG, discM);
+  disc.rotation.x = -Math.PI / 2; disc.position.set(mx, .043, mz); g.add(disc);
+  // ножки
+  add(new THREE.CylinderGeometry(.005, .005, .045, 5), rub, sx * .1, -.04, sz * .11);
+ }
+
+ // боевая часть под рамой: корпус, носовая часть, оперение, ремни
+ add(new THREE.CylinderGeometry(.03, .03, .2, 12), olive, 0, -.075, -.01, Math.PI / 2, 0, 0);
+ add(new THREE.ConeGeometry(.03, .08, 12), new THREE.MeshStandardMaterial({ color: 0xb02a20, roughness: .5 }), 0, -.075, -.145, -Math.PI / 2, 0, 0);
+ add(new THREE.CylinderGeometry(.031, .031, .012, 12), new THREE.MeshStandardMaterial({ color: 0xe4c54a, roughness: .5 }), 0, -.075, -.04, Math.PI / 2, 0, 0);
+ for(let i = 0; i < 4; i++){
+  const f = add(B(.05, .003, .05), carbon2, 0, -.075, .12);
+  f.rotation.z = i * Math.PI / 2;
+ }
+ add(B(.012, .06, .012), rub, .02, -.045, .02);
+ add(B(.012, .06, .012), rub, -.02, -.045, .02);
+
+ return { g, spins };
+}
+
+function makeWarhead(){
+ const g = new THREE.Group();
+ const olive = new THREE.MeshStandardMaterial({ color: 0x66783f, roughness: .55, metalness: .2 });
+ const red = new THREE.MeshStandardMaterial({ color: 0xc0301f, roughness: .45 });
+ const yel = new THREE.MeshStandardMaterial({ color: 0xe8c94a, roughness: .5 });
+ const steel = new THREE.MeshStandardMaterial({ color: 0x8e959b, roughness: .3, metalness: .85 });
+ const dark = new THREE.MeshStandardMaterial({ color: 0x1b1d20, roughness: .5, metalness: .3 });
+ const part = (geo, m, x, y, z, rx = 0, ry = 0, rz = 0) => {
+  const o = new THREE.Mesh(geo, m); o.position.set(x, y, z); o.rotation.set(rx, ry, rz); g.add(o); return o;
+ };
+ // корпус смотрит вперёд (−Z)
+ part(new THREE.CylinderGeometry(.075, .075, .46, 16), olive, 0, 0, 0, Math.PI / 2, 0, 0);
+ part(new THREE.ConeGeometry(.075, .2, 16), red, 0, 0, -.33, -Math.PI / 2, 0, 0);
+ part(new THREE.CylinderGeometry(.078, .078, .03, 16), yel, 0, 0, -.1, Math.PI / 2, 0, 0);
+ part(new THREE.CylinderGeometry(.078, .078, .02, 16), dark, 0, 0, .1, Math.PI / 2, 0, 0);
+ part(new THREE.CylinderGeometry(.055, .07, .09, 14), steel, 0, 0, .27, Math.PI / 2, 0, 0);
+ for(let i = 0; i < 4; i++){
+  const f = part(new THREE.BoxGeometry(.18, .008, .12), dark, 0, 0, .22);
+  f.rotation.z = i * Math.PI / 2;
+ }
+ // ремни крепления к раме
+ part(new THREE.BoxGeometry(.2, .02, .03), dark, 0, 0, -.05);
+ part(new THREE.BoxGeometry(.2, .02, .03), dark, 0, 0, .12);
+ // стойки вверх, к раме дрона
+ part(new THREE.BoxGeometry(.02, .24, .02), dark, -.07, .12, -.05);
+ part(new THREE.BoxGeometry(.02, .24, .02), dark, .07, .12, -.05);
+ part(new THREE.BoxGeometry(.02, .24, .02), dark, -.07, .12, .12);
+ part(new THREE.BoxGeometry(.02, .24, .02), dark, .07, .12, .12);
+ return g;
+}
+
+// ───────────── БОТЫ-ДРОНЫ ─────────────
+
+const bots = [];
+const BOT_NAMES = ['Альфа', 'Браво', 'Вектор'];
+const BOT_COLS = [0xff7a1a, 0x3ad0ff, 0xc86bff];
+let myK = 0;
+
+function hillTop(x, z){
+ let m = -2;
+ for(const h of hills){
+  const nd = Math.hypot((x - h.x) / h.R, (z - h.z) / (h.R * 1.7));
+  if(nd < 1.25) m = Math.max(m, -5 + h.h * (1 - Math.min(nd, 1)));
+ }
+ return m;
+}
+
+function makeLabel(text, col){
+ const c = document.createElement('canvas');
+ c.width = 256; c.height = 64;
+ const x = c.getContext('2d');
+ x.font = 'bold 34px Arial';
+ x.textAlign = 'center';
+ x.fillStyle = '#000a'; x.fillRect(20, 8, 216, 48);
+ x.fillStyle = col;
+ x.fillText(text, 128, 45);
+ const t = new THREE.CanvasTexture(c);
+ const s = new THREE.Sprite(new THREE.SpriteMaterial({ map: t, transparent: true, depthWrite: false, fog: false }));
+ s.scale.set(20, 5, 1);
+ return s;
+}
+
+function setBots(n){
+ for(const b of bots){ scene.remove(b.g); }
+ bots.length = 0;
+ for(let i = 0; i < n; i++){
+  const m = makeDroneModel(BOT_COLS[i % 3]);
+  const body = new THREE.Group();
+  m.g.scale.setScalar(4);
+  body.add(m.g);
+  body.rotation.order = 'YXZ';
+  const css = '#' + BOT_COLS[i % 3].toString(16).padStart(6, '0');
+  const lab = makeLabel('БОТ ' + BOT_NAMES[i % 3], css);
+  lab.position.set(0, 4.2, 0);
+  body.add(lab);
+  const glow = new THREE.Sprite(new THREE.SpriteMaterial({ map: sparkTex, blending: THREE.AdditiveBlending, depthWrite: false, transparent: true, fog: false, color: BOT_COLS[i % 3] }));
+  glow.scale.set(9, 9, 1);
+  body.add(glow);
+  scene.add(body);
+  const b = {
+   i, name: BOT_NAMES[i % 3], g: body, spins: m.spins, lab,
+   pos: new THREE.Vector3(), vel: new THREE.Vector3(), yaw: 0,
+   hp: 120, k: 0, dead: false, rt: 0, tgt: null, skill: .66 + Math.random() * .22, deaths: 0
+  };
+  botSpawn(b, i);
+  bots.push(b);
+ }
+}
+
+function botSpawn(b, i){
+ b.pos.set((i - 1) * 55 + (Math.random() - .5) * 20, 45, 35 + Math.random() * 30);
+ b.vel.set(0, 0, 0);
+ b.hp = 120; b.dead = false; b.tgt = null;
+ b.g.visible = true;
+ b.g.position.copy(b.pos);
+}
+
+function botPick(b){
+ let best = null, bd = 1e12;
+ for(const t of tanks){
+  if(!t.alive) continue;
+  let d = Math.hypot(t.x - b.pos.x, t.z - b.pos.z) * (.8 + Math.random() * .4);
+  for(const o of bots){ if(o !== b && o.tgt === t) d += 150; }
+  if(d < bd){ bd = d; best = t; }
+ }
+ return best;
+}
+
+function botCrash(b, why){
+ const p = b.pos.clone();
+ explode(p, new THREE.Vector3(0, -1, 0), why === 'землёй');
+ blast(p, 170, 14);
+ b.dead = true; b.rt = 10; b.deaths++;
+ b.g.visible = false;
+ b.tgt = null;
+ if(p.distanceTo(drone.pos) < 500) msg('Бот ' + b.name + ' разбился (' + why + ')');
+}
+
+function updateBots(dt){
+ if(!bots.length || !active) return;
+ for(const b of bots){
+  if(b.dead){
+   b.rt -= dt;
+   if(b.rt <= 0) botSpawn(b, b.i);
+   continue;
+  }
+  if(!b.tgt || !b.tgt.alive) b.tgt = botPick(b);
+  const t = b.tgt;
+  let tx = b.pos.x + 60, tz = b.pos.z - 60, ty = 60;
+  let hd = 1e9, T = null;
+  if(t){
+   T = TT[t.type];
+   tx = t.x; tz = t.z; ty = -2 + 1.4 * T.sc;
+   hd = Math.hypot(tx - b.pos.x, tz - b.pos.z);
+  }
+  const dx = tx - b.pos.x, dz = tz - b.pos.z, L = Math.hypot(dx, dz) + .001;
+  const ux = dx / L, uz = dz / L;
+  let wantY;
+  if(t && hd < 120) wantY = ty + hd * .55;
+  else wantY = Math.max(60, hillTop(b.pos.x, b.pos.z) + 22, hillTop(b.pos.x + ux * 70, b.pos.z + uz * 70) + 22);
+  const sp = (t && hd < 120 ? 40 : 34) * b.skill;
+  const tv = new THREE.Vector3(ux * sp, THREE.MathUtils.clamp((wantY - b.pos.y) * 1.2, -26, 22), uz * sp);
+  b.vel.lerp(tv, Math.min(1, dt * 2));
+  b.pos.addScaledVector(b.vel, dt);
+  b.pos.x = THREE.MathUtils.clamp(b.pos.x, -WORLD.X, WORLD.X);
+  b.pos.z = THREE.MathUtils.clamp(b.pos.z, WORLD.ZN, WORLD.ZS);
+  b.pos.y = Math.min(b.pos.y, 105);
+
+  // обстрел танками
+  if(T && hd < T.range * .85) b.hp -= dt * (T.dmg / T.every) * .33;
+
+  // таран
+  if(t && t.alive){
+   const rr = 4.4 * T.sc;
+   if(hd < rr && b.pos.y < -2 + 3.2 * T.sc + R){
+    destroyTank(t);
+    b.k++; b.tgt = null;
+    if(b.pos.distanceTo(drone.pos) < 600) msg('Бот ' + b.name + ' уничтожил танк · счёт ' + b.k);
+    botCrash(b, 'танком');
+    continue;
+   }
+  }
+
+  const hit = collide(b.pos);
+  if(hit){ botCrash(b, hit); continue; }
+  if(b.hp <= 0){ botCrash(b, 'огнём танков'); continue; }
+
+  // визуал
+  b.g.position.copy(b.pos);
+  b.yaw = Math.atan2(-b.vel.x, -b.vel.z);
+  const hv = Math.hypot(b.vel.x, b.vel.z);
+  b.g.rotation.y = b.yaw;
+  b.g.rotation.x = -Math.atan2(b.vel.y, hv + 1) * .5 - .25;
+  b.g.rotation.z = Math.sin(time * 1.3 + b.i) * .08;
+  b.spins.forEach(s => { s.g.rotation.y += dt * 120 * s.dir; });
+  const dd = b.pos.distanceTo(drone.pos);
+  b.lab.visible = dd < 900;
+ }
+}
+
 // ───────────── МИССИИ, ПРОФИЛЬ, УЛУЧШЕНИЯ, МЕНЮ, КАРТА ─────────────
 
 const SAVE_KEY2 = 'fpv_front_save_v2';
@@ -2160,7 +2802,8 @@ const MISSIONS = [
  { id: 'convoy', name: 'Колонна', desc: 'Уничтожьте колонну на главной дороге (3 танка)', type: 'convoy', reward: 10 },
  { id: 'blitz', name: 'Блиц', desc: 'Уничтожьте 6 танков за 4 минуты', type: 'tanks', n: 6, limit: 240, reward: 14 },
  { id: 'ghost', name: 'Призрак', desc: 'Уничтожьте 5 танков и ни разу не получите пулю или снаряд', type: 'tanks', n: 5, noHit: true, reward: 20 },
- { id: 'clear', name: 'Зачистка', desc: 'Уничтожьте все танки на карте', type: 'all', reward: 25 }
+ { id: 'clear', name: 'Зачистка', desc: 'Уничтожьте все танки на карте', type: 'all', reward: 25 },
+ { id: 'duel', name: 'Дуэль с ботами', desc: 'Три бота-дрона против вас: кто в сумме уничтожит 12 танков, тот выиграл — побеждает лучший счёт', type: 'duel', n: 12, bots: 3, reward: 18 }
 ];
 
 const UPG = [
@@ -2265,7 +2908,8 @@ function worldFresh(){
   newTarget(s);
  }
  for(const k of markers){ k.taken = false; k.m.visible = true; }
- kills = 0;
+ resetStructs();
+ kills = 0; myK = 0;
 }
 
 // ── запуск режимов
@@ -2281,6 +2925,7 @@ function enterGame(){
 function startMission(m){
  mode = m.id; mission = m; mState = 'run'; mTime = 0; endT = -1; menuBanner = ''; lastObj = null;
  worldFresh();
+ setBots(m.bots || 0);
  resetDrone();
  msg(m.desc);
  enterGame();
@@ -2289,14 +2934,24 @@ function startMission(m){
 function startFree(){
  mode = 'free'; mission = null; mState = 'free'; endT = -1; menuBanner = ''; lastObj = null;
  worldFresh();
+ setBots(0);
  applyFreeState();
  resetDrone();
  msg('Открытая карта: свободный полёт. Кнопка 🗺 — большая карта');
  enterGame();
 }
 
+function startTrain(){
+ mode = 'train'; mission = null; mState = 'free'; endT = -1; menuBanner = ''; lastObj = null;
+ worldFresh();
+ setBots(0);
+ resetDrone();
+ msg('Тренировка: танки и солдаты не стреляют, заряд бесконечный, очки не начисляются');
+ enterGame();
+}
+
 function resumeOK(){
- return !crashed && ((mode === 'free') || (mission && mState === 'run'));
+ return !crashed && ((mode === 'free') || (mode === 'train') || (mission && mState === 'run'));
 }
 
 function showMenu(){
@@ -2313,6 +2968,7 @@ function toggleMenu(){
 
 function restartOrRespawn(){
  if(mission) startMission(mission);
+ else if(mode === 'train') startTrain();
  else resetDrone();
 }
 
@@ -2360,6 +3016,14 @@ function updateMission(dt){
  mTime += dt;
  const m = mission;
  if(m.limit && mTime > m.limit){ endMission(false, 'время вышло'); return; }
+ if(m.type === 'duel'){
+  if(kills >= m.n){
+   const best = Math.max.apply(null, bots.map(b => b.k).concat([0]));
+   if(myK > best) endMission(true);
+   else endMission(false, myK === best ? 'ничья с ботом — нужно больше' : 'боты уничтожили больше танков (' + best + ' против ' + myK + ')');
+  }
+  return;
+ }
  let done = false;
  if(m.type === 'tanks') done = kills >= m.n;
  else if(m.type === 'all') done = kills >= tanks.length;
@@ -2369,7 +3033,7 @@ function updateMission(dt){
 }
 
 function objectiveText(){
- if(!mission) return mode === 'free' ? 'Открытая карта · свободный полёт' : '';
+ if(!mission) return mode === 'free' ? 'Открытая карта · свободный полёт' : mode === 'train' ? 'Тренировка · танки не стреляют, заряд не тратится' : '';
  const m = mission;
  let s = '🎯 ' + m.name + ': ';
  if(m.type === 'tanks') s += kills + '/' + m.n + ' танков';
@@ -2379,9 +3043,38 @@ function objectiveText(){
   s += c.filter(t => !t.alive).length + '/' + c.length + ' в колонне';
  }
  else if(m.type === 'markers') s += markers.filter(k => k.taken).length + '/' + m.n + ' маркеров';
+ else if(m.type === 'duel') s += 'Вы ' + myK + bots.map(b => ' · ' + b.name + ' ' + b.k).join('') + ' · всего ' + kills + '/' + m.n;
  if(m.limit) s += ' · ⏱ ' + fmt(m.limit - mTime);
  if(m.noHit) s += ' · без попаданий';
  return s;
+}
+
+// ── настройки
+function settingsHTML(){
+ const row = (title, key, opts, note) => {
+  let h = '<div class="setrow">' + title + '</div>';
+  opts.forEach(o => {
+   h += '<button class="mbtn small' + (String(cfg[key]) === String(o[1]) ? ' on' : '') + '" data-a="cfg" data-k="' + key + '" data-v="' + o[1] + '">' + o[0] + '</button>';
+  });
+  if(note) h += '<div style="font-size:11px;color:#8ea6b6">' + note + '</div>';
+  return h;
+ };
+ return row('Графика (разрешение)', 'q', [['Авто', 'auto'], ['Низкая', 'low'], ['Средняя', 'med'], ['Высокая', 'high']], 'Авто подстраивает чёткость под частоту кадров')
+  + row('Дальность прорисовки', 'dist', [['Близко', 0], ['Средне', 1], ['Далеко', 2]])
+  + row('Эффекты (дым, искры)', 'fx', [['Мало', 0], ['Норм', 1], ['Много', 2]])
+  + row('Тени', 'shadow', [['Выкл', 0], ['Вкл', 1]], 'Красивее, но нагружает телефон. Применяется после перезапуска игры')
+  + row('Громкость', 'vol', [['0%', 0], ['30%', .3], ['70%', .7], ['100%', 1]])
+  + row('Чувствительность джойстика', 'sens', [['Низкая', .7], ['Обычная', 1], ['Высокая', 1.3]])
+  + row('Виньетка (FPV-кадр)', 'vig', [['Выкл', 0], ['Вкл', 1]])
+  + row('Счётчик FPS', 'fps', [['Выкл', 0], ['Вкл', 1]]);
+}
+
+function applyCfg(){
+ applyPR();
+ scene.fog.density = DISTS[cfg.dist].fog;
+ $('vig').style.display = cfg.vig ? 'block' : 'none';
+ $('fpsb').style.display = cfg.fps ? 'block' : 'none';
+ if(master) master.gain.value = cfg.vol;
 }
 
 // ── меню
@@ -2400,6 +3093,8 @@ function renderMenu(){
        m.desc + ' · награда ' + m.reward + (best ? ' · рекорд ' + fmt(best) : '') + '</span></button>';
  });
 
+ h += '<h3>ТРЕНИРОВКА</h3>';
+ h += '<button class="mbtn" data-a="train"><b>Тренировка</b><span>Без стрельбы и урона, бесконечный заряд, очки не начисляются. Отрабатывайте полёт и тараны</span></button>';
  h += '<h3>ОТКРЫТАЯ КАРТА</h3>';
  h += '<button class="mbtn" data-a="free"><b>Свободный полёт</b><span>Вся карта доступна, уничтоженные цели остаются уничтоженными</span></button>';
 
@@ -2411,6 +3106,7 @@ function renderMenu(){
        ' · ур. ' + lvl + '/' + u.max + '</b><span>' + u.desc + (maxed ? ' · максимум' : ' · цена ' + cost) + '</span></button>';
  });
 
+ h += '<h3>НАСТРОЙКИ</h3>' + settingsHTML();
  h += '<p style="margin-top:14px"><button class="mbtn small" data-a="resetfree">Сбросить открытую карту</button> ' +
       '<button class="mbtn small" data-a="wipe">Стереть всё</button></p>';
  card.innerHTML = h;
@@ -2424,6 +3120,13 @@ $('menu').addEventListener('click', e => {
  if(a === 'resume') enterGame();
  else if(a === 'm') startMission(MISSIONS[+b.dataset.i]);
  else if(a === 'free') startFree();
+ else if(a === 'train') startTrain();
+ else if(a === 'cfg'){
+  const k = b.dataset.k, v = b.dataset.v;
+  cfg[k] = (k === 'q') ? v : Number(v);
+  if(k === 'q' && v === 'auto') autoPR = Math.min(devicePixelRatio || 1, 1);
+  saveCfg(); applyCfg(); renderMenu();
+ }
  else if(a === 'buy') buyUpgrade(b.dataset.k);
  else if(a === 'resetfree'){
   freeState = null;
@@ -2451,7 +3154,7 @@ function drawMap(){
  x.setTransform(dpr, 0, 0, dpr, 0, 0);
  x.clearRect(0, 0, W, H);
 
- const X0 = -1000, Z0 = -1750, WW = 2000, HH = 1870;
+ const X0 = -WORLD.X, Z0 = WORLD.ZN, WW = WORLD.X * 2, HH = WORLD.ZS - WORLD.ZN;
  const aw = W, ah = H - 96;
  const sc = Math.min(aw / WW, ah / HH) * .97;
  const ox = (aw - WW * sc) / 2, oy = 46 + (ah - HH * sc) / 2;
@@ -2462,11 +3165,12 @@ function drawMap(){
 
  x.strokeStyle = 'rgba(255,255,255,.08)';
  x.lineWidth = 1;
- for(let gx = -750; gx < 1000; gx += 250){ x.beginPath(); x.moveTo(px(gx), oy); x.lineTo(px(gx), oy + HH * sc); x.stroke(); }
- for(let gz = -1500; gz < 120; gz += 250){ x.beginPath(); x.moveTo(ox, py(gz)); x.lineTo(ox + WW * sc, py(gz)); x.stroke(); }
+ for(let gx = -1250; gx < 1500; gx += 250){ x.beginPath(); x.moveTo(px(gx), oy); x.lineTo(px(gx), oy + HH * sc); x.stroke(); }
+ for(let gz = -2250; gz < 120; gz += 250){ x.beginPath(); x.moveTo(ox, py(gz)); x.lineTo(ox + WW * sc, py(gz)); x.stroke(); }
 
  x.fillStyle = 'rgba(125,128,104,.6)';
  for(const h of hills){
+  if(Math.abs(h.x) > WORLD.X || h.z < WORLD.ZN || h.z > WORLD.ZS) continue;
   x.beginPath();
   x.ellipse(px(h.x), py(h.z), h.R * sc, h.R * 1.7 * sc, 0, 0, 6.283);
   x.fill();
@@ -2486,8 +3190,8 @@ function drawMap(){
  x.fillStyle = '#2a4527';
  for(const c of cyls){ if(c.tree) x.fillRect(px(c.x) - .8, py(c.z) - .8, 1.6, 1.6); }
 
- x.fillStyle = '#d0d0c4';
  for(const b of boxes){
+  x.fillStyle = b.dead ? '#5d5d56' : '#d0d0c4';
   x.fillRect(px(b.x0), py(b.z0), Math.max(2.5, (b.x1 - b.x0) * sc), Math.max(2.5, (b.z1 - b.z0) * sc));
  }
 
@@ -2517,6 +3221,16 @@ function drawMap(){
   }
  }
 
+ for(const b of bots){
+  if(b.dead) continue;
+  x.save();
+  x.translate(px(b.pos.x), py(b.pos.z));
+  x.rotate(b.yaw + Math.PI);
+  x.fillStyle = '#' + BOT_COLS[b.i % 3].toString(16).padStart(6, '0'); x.strokeStyle = '#fff'; x.lineWidth = 1;
+  x.beginPath(); x.moveTo(0, -9); x.lineTo(6, 7); x.lineTo(-6, 7); x.closePath(); x.fill(); x.stroke();
+  x.restore();
+ }
+
  x.save();
  x.translate(px(drone.pos.x), py(drone.pos.z));
  x.rotate(Math.atan2(-Math.sin(drone.yaw), -Math.cos(drone.yaw)) + Math.PI / 2);
@@ -2531,7 +3245,7 @@ function drawMap(){
  x.font = '12px Arial';
  x.textAlign = 'left';
  const ly = H - 30;
- const leg = [['#69e0ff', 'вы'], ['#ff453a', 'танк'], ['#ffd60a', 'солдат'], ['#ffc85c', 'маркер'], ['#d0d0c4', 'здания']];
+ const leg = [['#69e0ff', 'вы'], ['#ff9f0a', 'бот'], ['#ff453a', 'танк'], ['#ffd60a', 'солдат'], ['#ffc85c', 'маркер'], ['#d0d0c4', 'здания']];
  let lx = Math.max(10, W / 2 - 170);
  for(const l of leg){
   x.fillStyle = l[0]; x.fillRect(lx, ly - 8, 10, 10);
@@ -2561,12 +3275,15 @@ renderMenu();
 
 // ───────────── ЗВУК ─────────────
 
-let AC = null, engOsc = null, engGain = null, muted = false, beepT = 0;
+let AC = null, engOsc = null, engGain = null, muted = false, beepT = 0, master = null, startupDone = false;
 
 function initAudio(){
  if(AC) return;
  try{
   AC = new (window.AudioContext || window.webkitAudioContext)();
+  master = AC.createGain();
+  master.gain.value = cfg.vol;
+  master.connect(AC.destination);
   engOsc = AC.createOscillator();
   engOsc.type = 'sawtooth';
   engOsc.frequency.value = 90;
@@ -2574,9 +3291,37 @@ function initAudio(){
   f.type = 'lowpass'; f.frequency.value = 900;
   engGain = AC.createGain();
   engGain.gain.value = 0;
-  engOsc.connect(f); f.connect(engGain); engGain.connect(AC.destination);
+  engOsc.connect(f); f.connect(engGain); engGain.connect((master || AC.destination));
   engOsc.start();
  }catch(e){ AC = null; }
+}
+
+function playStartup(){
+ if(startupDone || !AC || muted) return;
+ startupDone = true;
+ try{
+  const t0 = AC.currentTime + .05;
+  const tone = (type, f0, f1, st, dur, vol, lp) => {
+   const o = AC.createOscillator(), g = AC.createGain(), fl = AC.createBiquadFilter();
+   o.type = type;
+   o.frequency.setValueAtTime(f0, t0 + st);
+   o.frequency.exponentialRampToValueAtTime(f1, t0 + st + dur);
+   fl.type = 'lowpass'; fl.frequency.value = lp || 4000;
+   g.gain.setValueAtTime(.0001, t0 + st);
+   g.gain.exponentialRampToValueAtTime(vol, t0 + st + Math.min(.08, dur / 3));
+   g.gain.exponentialRampToValueAtTime(.0001, t0 + st + dur);
+   o.connect(fl); fl.connect(g); g.connect(master || AC.destination);
+   o.start(t0 + st); o.stop(t0 + st + dur + .05);
+  };
+  noiseBurst(.18, .25, 3500);
+  tone('sawtooth', 55, 260, .1, 1.0, .2, 700);
+  tone('square', 880, 880, 1.0, .09, .09);
+  tone('square', 1175, 1175, 1.14, .09, .09);
+  tone('square', 1568, 1568, 1.28, .16, .09);
+  tone('triangle', 440, 440, 1.5, 1.4, .16);
+  tone('triangle', 660, 660, 1.5, 1.4, .12);
+  tone('triangle', 880, 880, 1.5, 1.4, .09);
+ }catch(e){}
 }
 
 function noiseBurst(dur, vol, freq){
@@ -2592,7 +3337,7 @@ function noiseBurst(dur, vol, freq){
   f.type = 'lowpass'; f.frequency.value = freq;
   const g = AC.createGain();
   g.gain.value = vol;
-  src.connect(f); f.connect(g); g.connect(AC.destination);
+  src.connect(f); f.connect(g); g.connect((master || AC.destination));
   src.start();
  }catch(e){}
 }
@@ -2605,7 +3350,7 @@ function beep(freq, dur, vol){
   o.frequency.value = freq;
   g.gain.setValueAtTime(vol, AC.currentTime);
   g.gain.exponentialRampToValueAtTime(.001, AC.currentTime + dur);
-  o.connect(g); g.connect(AC.destination);
+  o.connect(g); g.connect((master || AC.destination));
   o.start(); o.stop(AC.currentTime + dur);
  }catch(e){}
 }
@@ -2689,18 +3434,21 @@ function crash(p, reason){
  crashCam.y = Math.max(crashCam.y, -.5);
 
  explode(p, dir, reason === 'землёй');
+ const nb = blast(p, 170, 14);
 
  trauma = 1;
  flashV = 1;
  drone.vel.set(0, 0, 0);
  propGroup.visible = false;
  $('crs').textContent = crashes;
- msg('Дрон уничтожен при столкновении с ' + reason);
+ msg('Дрон уничтожен при столкновении с ' + reason + (nb ? ' · разрушено зданий: ' + nb : ''));
+ $('sgr').textContent = 'причина: ' + reason + ' · восстановление связи…';
 }
 
 // ───────────── СБРОС ─────────────
 
 function resetDrone(){
+ rammedCrash = false;
  clearFX();
  drone.pos.set(0, 35, 15);
  drone.vel.set(0, 0, 0);
@@ -2829,10 +3577,11 @@ function drawNoise(){
 const prev = new THREE.Vector3();
 const tmp = new THREE.Vector3();
 let time = 0;
+let ftA = 0, ftN = 0;
 
 function flight(dt, now){
- const forward = (keys.KeyW ? 1 : 0) - (keys.KeyS ? 1 : 0) - joy.y;
- const side = (keys.KeyD ? 1 : 0) - (keys.KeyA ? 1 : 0) + joy.x;
+ const forward = (keys.KeyW ? 1 : 0) - (keys.KeyS ? 1 : 0) - joy.y * cfg.sens;
+ const side = (keys.KeyD ? 1 : 0) - (keys.KeyA ? 1 : 0) + joy.x * cfg.sens;
  const lift = (upHeld || keys.KeyE || keys.Space ? 1 : 0) - (downHeld || keys.KeyQ || keys.ShiftLeft ? 1 : 0);
 
  if(keys.ArrowLeft) drone.yaw += dt * 1.6;
@@ -2871,12 +3620,12 @@ function flight(dt, now){
  }
 
  drone.pos.y = Math.min(drone.pos.y, 105);
- drone.pos.x = THREE.MathUtils.clamp(drone.pos.x, -1000, 1000);
- drone.pos.z = THREE.MathUtils.clamp(drone.pos.z, -1750, 120);
+ drone.pos.x = THREE.MathUtils.clamp(drone.pos.x, -WORLD.X, WORLD.X);
+ drone.pos.z = THREE.MathUtils.clamp(drone.pos.z, WORLD.ZN, WORLD.ZS);
 
  drone.roll = THREE.MathUtils.lerp(drone.roll, THREE.MathUtils.clamp(-side * .32, -.4, .4), dt * 4);
 
- drone.battery = Math.max(0, drone.battery - dt * (.12 + drone.throttle * .1) * (1 - .15 * profile.up.bat));
+ drone.battery = Math.max(0, drone.battery - (mode === 'train' ? 0 : dt * (.12 + drone.throttle * .1) * (1 - .15 * profile.up.bat)));
 
  // проверка столкновений по пути (чтобы не пролететь сквозь)
  const dist = prev.distanceTo(drone.pos);
@@ -2902,8 +3651,8 @@ function flight(dt, now){
    setTimeout(saveProgress, 0);
    drone.hp = Math.min(maxHp(), drone.hp + 15);
    drone.battery = Math.min(100, drone.battery + 15);
-   msg('Маркер: +1 очко, +15 HP, +15% заряда');
-   pts++;
+   msg(mode === 'train' ? 'Маркер собран' : 'Маркер: +1 очко, +15 HP, +15% заряда');
+   if(mode !== 'train') pts++;
    $('pts').textContent = pts;
   }
  });
@@ -2918,10 +3667,28 @@ function flight(dt, now){
 function animate(now){
  requestAnimationFrame(animate);
 
- const dt = Math.min((now - last) / 1000, .035);
+ const rawDt = (now - last) / 1000;
+ const dt = Math.min(rawDt, .035);
  last = now;
  time += dt;
  if(paused){ renderer.render(scene, camera); return; }
+ if(active && rawDt < .25){
+  ftA += rawDt; ftN++;
+  if(ftA > 1.3){
+   const fps = ftN / ftA;
+   if(cfg.fps) $('fpsb').textContent = Math.round(fps) + ' FPS · ' + curPR().toFixed(2) + 'x';
+   if(cfg.q === 'auto'){
+    if(fps < 40 && autoPR > .5){ autoPR = Math.max(.5, autoPR - .1); applyPR(); }
+    else if(fps > 57 && autoPR < Math.min(devicePixelRatio || 1, 1.5)){ autoPR = Math.min(autoPR + .05, 1.5); applyPR(); }
+   }
+   ftA = 0; ftN = 0;
+  }
+ }
+ if(cfg.shadow){
+  sun.target.position.copy(drone.pos);
+  sun.position.copy(drone.pos).addScaledVector(sunDir, 350);
+  sun.target.updateMatrixWorld();
+ }
 
  let side = 0, lift = 0;
 
@@ -2939,7 +3706,7 @@ function animate(now){
    drawNoise();
   }
   if(crashT > 3.4){
-   if(mission) endMission(false, 'дрон уничтожен');
+   if(mission && !rammedCrash) endMission(false, 'дрон уничтожен');
    else resetDrone();
   }
  }
@@ -2955,6 +3722,8 @@ function animate(now){
  updateFX(dt);
  updateTanks(dt);
  updateSoldiers(dt);
+ updateStructs(dt);
+ updateBots(dt);
  updateMission(dt);
  if(endT >= 0){ endT -= dt; if(endT < 0){ endT = -1; showMenu(); } }
 
@@ -3005,6 +3774,37 @@ function animate(now){
  renderer.render(scene, camera);
 }
 
+function freezeStatic(){
+ for(const b of destr) staticObjs.push(b.obj);
+ for(const o of staticObjs){ o.updateMatrixWorld(true); o.matrixWorldAutoUpdate = false; }
+}
+
+function applyShadows(){
+ if(!cfg.shadow) return;
+ scene.traverse(o => { if(o.isMesh) o.receiveShadow = true; });
+ for(const b of destr) b.obj.traverse(o => { if(o.isMesh) o.castShadow = true; });
+ for(const t of tanks) t.group.traverse(o => { if(o.isMesh) o.castShadow = true; });
+}
+
+applyShadows();
+freezeStatic();
+applyCfg();
+
+// звук запуска: сразу, если браузер разрешает, иначе при первом касании
+(function(){
+ initAudio();
+ const go = () => {
+  if(!AC) return;
+  try{ AC.resume(); }catch(e){}
+  playStartup();
+ };
+ if(AC && AC.state === 'running') playStartup();
+ else ['pointerdown', 'touchstart', 'keydown', 'click'].forEach(ev => addEventListener(ev, function once(){
+  removeEventListener(ev, once);
+  go();
+ }, { passive: true }));
+})();
+
 requestAnimationFrame(animate);
 
 // ───────────── РАЗМЕР ЭКРАНА ─────────────
@@ -3012,8 +3812,7 @@ requestAnimationFrame(animate);
 addEventListener('resize', () => {
  camera.aspect = innerWidth / innerHeight;
  camera.updateProjectionMatrix();
- renderer.setSize(innerWidth, innerHeight);
- renderer.setPixelRatio(Math.min(devicePixelRatio, 1.5));
+ applyPR();
  layoutProps();
 });
 
@@ -3029,9 +3828,25 @@ if(window.visualViewport) visualViewport.addEventListener('resize', () => dispat
 <script>
 (function(){
  var card = document.getElementById('menu');
- var started = false;
- function status(t){ if(card && !started) card.innerHTML = '<h1>FPV FRONT</h1><p>' + t + '</p>'; }
+ var started = false, t0 = Date.now();
+ function hideSplash(force){
+  var sp = document.getElementById('splash');
+  if(!sp || sp.dataset.h) return;
+  sp.dataset.h = '1';
+  var wait = force ? 0 : Math.max(0, 3200 - (Date.now() - t0));
+  setTimeout(function(){
+   sp.className = 'hide';
+   setTimeout(function(){ sp.style.display = 'none'; }, 900);
+  }, wait);
+ }
+ setTimeout(function(){ hideSplash(true); }, 30000);
+ function status(t){
+  var st = document.getElementById('spst');
+  if(st) st.textContent = t.replace(/<[^>]*>/g, ' ');
+  if(card && !started) card.innerHTML = '<h1>FPV FRONT</h1><p>' + t + '</p>';
+ }
  function showErr(t){
+  hideSplash(true);
   var d = document.createElement('div');
   d.style.cssText = 'position:fixed;left:8px;right:8px;top:8px;z-index:99;background:#400;color:#fff;padding:10px;font:12px/1.4 monospace;border-radius:8px;white-space:pre-wrap;max-height:60vh;overflow:auto';
   d.textContent = t;
@@ -3049,10 +3864,11 @@ if(window.visualViewport) visualViewport.addEventListener('resize', () => dispat
  function run(){
   if(started) return;
   started = true;
-  try{ __main(); }catch(e){ showErr('Ошибка запуска: ' + (e && e.stack ? e.stack : e)); }
+  try{ __main(); hideSplash(false); }catch(e){ showErr('Ошибка запуска: ' + (e && e.stack ? e.stack : e)); }
  }
 
  function fail(){
+  hideSplash(true);
   status('Не удалось загрузить движок three.js.<br><br>Скачайте файл <b>three.min.js</b> (версия r158) и положите его рядом с этим HTML-файлом, либо проверьте интернет и обновите страницу.<br><br><small>https://cdn.jsdelivr.net/npm/three@0.158.0/build/three.min.js</small>');
  }
 
